@@ -1,0 +1,38 @@
+$primary: #3f51b5;
+$border-color: #002984;
+
+.users-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.users-content {
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.users-content-header {
+  padding: 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+}
+
+.add-user-btn {
+  padding: 5px 10px;
+  border-radius: 3px;
+  background-color: $primary;
+  color: #fff;
+  transition: 0.15s;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.2s;
+  }
+}
