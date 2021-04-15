@@ -1,6 +1,6 @@
 import thunk from "redux-thunk";
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
-import { UsersTableReducer } from "store/UsersTable/reducer";
+import { UsersTableReducer } from "store/Users/reducer";
 import { appReducer } from "store/App/reducer";
 
 declare global {

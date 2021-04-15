@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { UsersTable } from "./UsersTable/UsersTable";
-import { AddUser } from "components/AddUser/AddUser";
+import { AddUser } from "common/AddUser/AddUser";
 import { Button } from "@material-ui/core";
 import { IUser } from "models/IUser";
 

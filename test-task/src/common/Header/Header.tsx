@@ -1,11 +1,10 @@
+import * as React from "react";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { switchTheme } from "store/App/actions";
 import { IRoute } from "models/IRoute";
-import * as React from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-
 import "./Header.scss";
 
 interface IHeaderProps {

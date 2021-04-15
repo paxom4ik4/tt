@@ -1,4 +1,4 @@
-import { deleteUser } from "store/UsersTable/actions";
+import { deleteUser } from "store/Users/actions";
 import * as React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";

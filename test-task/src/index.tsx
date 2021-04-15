@@ -1,7 +1,8 @@
-import { App } from "components/App/App";
+import { App } from "./App/App";
 import * as React from "react";
+import { useEffect } from "react";
 import * as ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "store";
 
 import "./index.scss";

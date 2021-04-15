@@ -4,7 +4,7 @@
   import * as React from "react";
   import { useState, useEffect } from "react";
   import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-  import { addUser } from "store/UsersTable/actions";
+  import { addUser } from "store/Users/actions";
   import { Button } from "@material-ui/core";
   import { Alert } from "@material-ui/lab";
 

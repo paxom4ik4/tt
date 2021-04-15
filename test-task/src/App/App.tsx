@@ -1,20 +1,28 @@
 import * as React from "react";
-import { ChartContainer } from "components/Chart/Chart";
-import { Users } from "components/Users/Users";
+import { useEffect } from "react";
+import { ChartContainer } from "../common/Chart/Chart";
+import { Users } from "../common/Users/Users";
 import { CSSTransition } from "react-transition-group";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Header } from "components/Header/Header";
+import { Header } from "../common/Header/Header";
 import { IRoute } from "models/IRoute";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import usePrefersColorScheme from "use-prefers-color-scheme";
+import { getUsers } from "store/Users/actions";
+import { IUser } from "models/IUser";
+import { switchTheme } from "store/App/actions";
 
 import "./App.scss";
-import { getUsers } from "store/UsersTable/actions";
-import { IUser } from "models/IUser";
 
 export const App: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
+  const preferredColorSchema: string = usePrefersColorScheme();
+  const isDarkMode: boolean = preferredColorSchema === "dark";
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (isDarkMode) {
+      dispatch(switchTheme());
+    }
     dispatch(getUsers());
   }, []);
 

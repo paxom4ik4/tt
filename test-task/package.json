@@ -59,6 +59,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "use-prefers-color-scheme": "^0.1.1",
     "vis-react": "^0.5.1"
   }
 }

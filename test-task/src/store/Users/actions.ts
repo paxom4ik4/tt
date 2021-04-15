@@ -1,7 +1,9 @@
 import { IUser } from "models/IUser";
 import { ActionTypes } from "./constants";
-import { fetchUsers } from "../../requests/fetchUsers";
 import { Action, Dispatch } from "redux";
+import UserApi from "../../services/user-api-service";
+
+const userApi = new UserApi();
 
 export const fetchUsersStart = () => ({
   type: ActionTypes.FETCH_USERS_START,
@@ -30,9 +32,8 @@ export const deleteUser = (id: string) => ({
 export const getUsers = () => (dispatch: Dispatch<Action>) => {
   dispatch(fetchUsersStart());
 
-  fetchUsers()
-    .then((res) => res.json())
+  userApi
+    .getUsers()
     .then((data) => dispatch(fetchUsersSuccess(data)))
-
     .catch((err) => dispatch(fetchUsersFailure(err.message)));
 };
