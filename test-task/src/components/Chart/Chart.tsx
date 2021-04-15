@@ -1,56 +1,85 @@
 import * as React from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
-import {
-  BarController,
-  LinearScale,
-  BarElement,
-  TimeScale,
-  Tooltip,
-} from "chart.js";
-
-import { ReactChart } from "chartjs-react";
+import { Line } from "react-chartjs-2";
 
 import "./Chart.scss";
-import { IUser } from "models/IUser";
 
-const Chart: React.FC = (): JSX.Element => {
+export const ChartContainer: React.FC = (): JSX.Element => {
   const users = useSelector((state: RootStateOrAny) => state.users.users);
 
-  const averageCounter = (users: Array<IUser>, property: string): number => {
-    if (property === "connections") {
-      const res = users
-        .map((user) => user[property].length)
-        .reduce((sum, value) => {
-          return sum + value / users.length;
-        }, 0)
-        .toFixed(2);
+  const usersAges: Array<number> = users.map((user) => {
+    return user.age;
+  });
 
-      return Number(res);
-    }
-    return users
-      .map((user) => user[property])
-      .reduce((sum, value) => {
-        return sum + value / users.length;
-      }, 0)
-      .toFixed(2);
-  };
+  const profileViews: Array<number> = users.map((user) => {
+    return user.profileViews;
+  });
 
-  const usersAverageAges: number = averageCounter(users, "age");
-  const usersAverageProfileViews: number = averageCounter(
-    users,
-    "profileViews"
-  );
-  const usersAverageConnections: number = averageCounter(users, "connections");
+  const connections: Array<number> = users.map((user) => {
+    return user.connections.length;
+  });
 
-  const data = {
-    labels: ["Average Age", "Average Profile Views", "Average Connections"],
+  const userNames: Array<string> = users.map((user) => {
+    return user.firstName + " " + user.lastName;
+  });
+
+  interface IDataSet {
+    label: string;
+    fill: boolean;
+    lineTension: number;
+    backgroundColor: string;
+    borderColor: string;
+    borderCapStyle: string;
+    borderDash: [];
+    borderDashOffset: number;
+    borderJoinStyle: string;
+    pointBorderColor: string;
+    pointBackgroundColor: string;
+    pointBorderWidth: number;
+    pointHoverRadius: number;
+    pointHoverBackgroundColor: string;
+    pointHoverBorderColor: string;
+    pointHoverBorderWidth: number;
+    pointRadius: number;
+    pointHitRadius: number;
+    data: Array<number> | Array<string>;
+  }
+
+  interface IDataChartObject {
+    labels: string[];
+    datasets: Array<IDataSet>;
+  }
+
+  const data: IDataChartObject = {
+    labels: userNames,
     datasets: [
       {
-        label: "My First dataset",
+        label: "User's Age",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "rgba(35,102,102,0.4)",
+        borderColor: "rgba(35,192,192,1)",
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: "rgba(35,102,102,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(35,102,102,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: usersAges,
+      },
+      {
+        label: "Profile Views",
         fill: false,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
+        borderColor: "#7ca6de",
         borderCapStyle: "butt",
         borderDash: [],
         borderDashOffset: 0.0,
@@ -64,50 +93,38 @@ const Chart: React.FC = (): JSX.Element => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [
-          usersAverageAges,
-          usersAverageProfileViews,
-          usersAverageConnections,
-        ],
+        data: profileViews,
+      },
+      {
+        label: "Connections",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "rgba(135,192,192,0.4)",
+        borderColor: "#929292",
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: "rgba(135,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(135,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: connections,
       },
     ],
-  };
-
-  ReactChart.register(
-    BarController,
-    LinearScale,
-    BarElement,
-    TimeScale,
-    Tooltip
-  );
-
-  const chartOption: any = {
-    scales: {
-      x: {
-        type: "linear",
-      },
-      y: {
-        type: "linear",
-      },
-    },
-  };
-
-  console.log(data);
-
-  const BarChart = () => {
-    return (
-      <ReactChart type="bar" data={data} options={chartOption} height={500} />
-    );
   };
 
   return (
     <div className="chart-container">
       <div className="chart-content">
         <h3 className="chart-title">Chart</h3>
-        <BarChart />
+        <Line data={data} />
       </div>
     </div>
   );
 };
-
-export default Chart;

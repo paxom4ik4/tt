@@ -30,6 +30,11 @@
   transition: opacity 300ms, transform 300ms;
 }
 
-.app-container {
-  background-color: #000;
+body {
+  transition: 0.3s;
+}
+.dark-theme {
+  background-color: #303030;
+  color: #ffffff;
+  transition: 0.3s;
 }

@@ -1,30 +1,42 @@
-import { getUsers } from "containers/UsersTable/actions";
+import { deleteUser } from "store/UsersTable/actions";
 import * as React from "react";
-import { useEffect } from "react";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { useState } from "react";
 import { css } from "@emotion/core";
 import ClipLoader from "react-spinners/ClipLoader";
-
-import "./UsersTable.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
   faAngleRight,
-  faSortDown,
-  faSortUp,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { Button, Tooltip } from "@material-ui/core";
+import { IUser } from "models/IUser";
 
-const UsersTable: React.FC = (): JSX.Element => {
+import "./UsersTable.scss";
+
+export const UsersTable: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
+  const appTheme: string = useSelector(
+    (state: RootStateOrAny) => state.app.appTheme
+  );
+
+  const tbodyClass = appTheme === "dark" ? "tbody-dark" : "";
+  const usersTableClass =
+    appTheme === "dark" ? "users-table users-table-dark" : "users-table";
+  const paginationClass =
+    appTheme === "dark" ? "pagination pagination-dark" : "pagination";
 
   const override = css`
     position: fixed;
@@ -33,29 +45,46 @@ const UsersTable: React.FC = (): JSX.Element => {
     transform: translate(-50%, -50%);
     border-color: black;
   `;
-  const [color, setColor] = useState("#ffffff");
+
+  const [onDelete, setOnDelete] = useState<boolean>(false);
+  const [deleteUserId, setDeleteUserId] = useState<string>("");
 
   const isTableLoading = useSelector(
     (state: RootStateOrAny) => state.users.isLoading
   );
 
-  const angleRigthIcon = <FontAwesomeIcon icon={faAngleRight} />;
-  const angleLeftIcon = <FontAwesomeIcon icon={faAngleLeft} />;
-  const angleDoubleRigthIcon = <FontAwesomeIcon icon={faAngleDoubleRight} />;
-  const angleDoubleLeftIcon = <FontAwesomeIcon icon={faAngleDoubleLeft} />;
+  const handleClickOpen = (): void => {
+    setOnDelete(true);
+  };
 
-  const sortUpIcon = <FontAwesomeIcon icon={faSortUp} />;
-  const sortDownIcon = <FontAwesomeIcon icon={faSortDown} />;
+  const handleClose = (): void => {
+    setOnDelete(false);
+  };
+
+  const angleRigthIcon: JSX.Element = <FontAwesomeIcon icon={faAngleRight} />;
+  const angleLeftIcon: JSX.Element = <FontAwesomeIcon icon={faAngleLeft} />;
+  const angleDoubleRigthIcon: JSX.Element = (
+    <FontAwesomeIcon icon={faAngleDoubleRight} />
+  );
+  const angleDoubleLeftIcon: JSX.Element = (
+    <FontAwesomeIcon icon={faAngleDoubleLeft} />
+  );
 
   const deleteUserHandler = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
-    console.log(event.currentTarget);
+    handleClickOpen();
+    setDeleteUserId(event.currentTarget.getAttribute("id"));
   };
 
-  const DeleteIcon: React.FC = () => {
+  interface IDeleteIconProps {
+    userId: string;
+  }
+
+  const DeleteIcon: React.FC<IDeleteIconProps> = ({ userId }) => {
     return (
       <div
+        id={userId}
         className="delete-user-btn"
         onClick={(event) => deleteUserHandler(event)}
       >
@@ -64,7 +93,16 @@ const UsersTable: React.FC = (): JSX.Element => {
     );
   };
 
-  const data = useSelector((state: RootStateOrAny) => state.users.users);
+  const users: Array<IUser> = useSelector(
+    (state: RootStateOrAny) => state.users.users
+  );
+
+  const connectionConverter = (text: Array<string>): string => {
+    if (text.length) {
+      return text.join(" ");
+    }
+    return "No connections";
+  };
 
   const columns = React.useMemo(
     () => [
@@ -124,6 +162,11 @@ const UsersTable: React.FC = (): JSX.Element => {
           {
             Header: "Connections",
             accessor: "connections",
+            Cell: (props) => (
+              <Tooltip title={connectionConverter(props.cell.value)}>
+                <Button>User Connections</Button>
+              </Tooltip>
+            ),
           },
           {
             Header: "Role",
@@ -131,7 +174,8 @@ const UsersTable: React.FC = (): JSX.Element => {
           },
           {
             Header: "Delete",
-            Cell: () => <DeleteIcon />,
+            accessor: "id",
+            Cell: (props) => <DeleteIcon userId={props.cell.value} />,
           },
         ],
       },
@@ -169,43 +213,78 @@ const UsersTable: React.FC = (): JSX.Element => {
 
     return (
       <>
-        <div className="pagination">
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            {angleDoubleLeftIcon}
-          </button>{" "}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {angleLeftIcon}
-          </button>{" "}
-          <span>
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
-          </span>
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            {angleRigthIcon}
-          </button>{" "}
-          <button
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            {angleDoubleRigthIcon}
-          </button>{" "}
+        <div className={paginationClass}>
+          <div>
+            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+              {angleDoubleLeftIcon}
+            </button>{" "}
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {angleLeftIcon}
+            </button>{" "}
+            <span>
+              Page{" "}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>{" "}
+            </span>
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              {angleRigthIcon}
+            </button>{" "}
+            <button
+              onClick={() => gotoPage(pageCount - 1)}
+              disabled={!canNextPage}
+            >
+              {angleDoubleRigthIcon}
+            </button>{" "}
+          </div>
+          <div className="average-values">
+            <div className="average-ages">
+              Average Age:{" "}
+              {users
+                .map((user) => user.age)
+                .reduce((sum, value) => {
+                  return sum + value / users.length;
+                }, 0)
+                .toFixed(2)}
+            </div>
+            <div className="average-profile-views">
+              Average Profile Views:{" "}
+              {users
+                .map((user) => user.profileViews)
+                .reduce((sum, value) => {
+                  return sum + value / users.length;
+                }, 0)
+                .toFixed(2)}
+            </div>
+          </div>
         </div>
-        <table {...getTableProps()} className="users-table">
+        <table {...getTableProps()} className={usersTableClass}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className="table-header-ceil"
+                  >
                     {column.render("Header")}
-                    <span>{column.isSorted ? column.isSortedDesc : ""}</span>
+                    <span>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <ArrowDropDownIcon className="arrow-icon" />
+                        ) : (
+                          <ArrowDropUpIcon className="arrow-icon" />
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </span>
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
+          <tbody {...getTableBodyProps()} className={tbodyClass}>
             {page.map((row, i) => {
               prepareRow(row);
               return (
@@ -229,16 +308,46 @@ const UsersTable: React.FC = (): JSX.Element => {
     <div className="users-table-container">
       {isTableLoading ? (
         <ClipLoader
-          color={color}
+          color="#ffffff"
           loading={isTableLoading}
           css={override}
           size={50}
         />
       ) : (
-        <Table columns={columns} data={data} />
+        <>
+          <Table columns={columns} data={users} />
+          <Dialog
+            open={onDelete}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Confirm Action"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are you sure want delete user?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                No
+              </Button>
+              <Button
+                onClick={() => {
+                  dispatch(deleteUser(deleteUserId));
+                  handleClose();
+                }}
+                color="primary"
+                autoFocus
+              >
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
       )}
     </div>
   );
 };
-
-export default UsersTable;

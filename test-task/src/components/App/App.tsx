@@ -1,24 +1,39 @@
-import Chart from "components/Chart";
-import Users from "components/Users";
 import * as React from "react";
+import { ChartContainer } from "components/Chart/Chart";
+import { Users } from "components/Users/Users";
 import { CSSTransition } from "react-transition-group";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Header from "components/Header";
+import { Header } from "components/Header/Header";
 import { IRoute } from "models/IRoute";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
 import "./App.scss";
-import { RootStateOrAny, useSelector } from "react-redux";
+import { getUsers } from "store/UsersTable/actions";
+import { IUser } from "models/IUser";
 
-const App: React.FC = (): JSX.Element => {
+export const App: React.FC = (): JSX.Element => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getUsers());
+  }, []);
+
+  const users: Array<IUser> = useSelector(
+    (state: RootStateOrAny) => state.users.users
+  );
+
   const routes: Array<IRoute> = [
-    { path: "/", name: "Users", Component: Users },
-    { path: "/charts", name: "Chart", Component: Chart },
+    { path: "/", name: "Users", Component: <Users users={users} /> },
+    { path: "/charts", name: "Chart", Component: <ChartContainer /> },
   ];
 
   const appTheme: string = useSelector(
     (state: RootStateOrAny) => state.app.appTheme
   );
+
+  appTheme === "dark"
+    ? document.body.classList.add("dark-theme")
+    : document.body.classList.remove("dark-theme");
 
   return (
     <Router>
@@ -34,9 +49,7 @@ const App: React.FC = (): JSX.Element => {
                   classNames="page"
                   unmountOnExit
                 >
-                  <div className="page">
-                    <Component />
-                  </div>
+                  <div className="page">{Component}</div>
                 </CSSTransition>
               )}
             </Route>
@@ -46,5 +59,3 @@ const App: React.FC = (): JSX.Element => {
     </Router>
   );
 };
-
-export default App;

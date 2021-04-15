@@ -17,6 +17,16 @@ export const fetchUsersFailure = (error: string) => ({
   payload: error,
 });
 
+export const addUser = (user: IUser) => ({
+  type: ActionTypes.ADD_USER,
+  payload: user,
+});
+
+export const deleteUser = (id: string) => ({
+  type: ActionTypes.DELETE_USER,
+  payload: id,
+});
+
 export const getUsers = () => (dispatch: Dispatch<Action>) => {
   dispatch(fetchUsersStart());
 

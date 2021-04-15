@@ -1,6 +1,6 @@
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { switchTheme } from "containers/App/actions";
+import { switchTheme } from "store/App/actions";
 import { IRoute } from "models/IRoute";
 import * as React from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ interface IHeaderProps {
   routes: Array<IRoute>;
 }
 
-const Header: React.FC<IHeaderProps> = ({ routes }): JSX.Element => {
+export const Header: React.FC<IHeaderProps> = ({ routes }): JSX.Element => {
   const dispatch = useDispatch();
 
   const sunIcon: JSX.Element = (
@@ -36,7 +36,6 @@ const Header: React.FC<IHeaderProps> = ({ routes }): JSX.Element => {
   return (
     <div className={headerClass}>
       <div className="header-content">
-        <div className="header-title">Users List</div>
         <button className="theme-mode" onClick={() => dispatch(switchTheme())}>
           {currentThemeIcon}
         </button>
@@ -57,5 +56,3 @@ const Header: React.FC<IHeaderProps> = ({ routes }): JSX.Element => {
     </div>
   );
 };
-
-export default Header;

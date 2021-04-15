@@ -34,6 +34,11 @@ $primary: #3f51b5;
   background-color: #fff;
 }
 
+.add-user-content-dark {
+  background-color: #303030;
+  box-shadow: 0 0 5px 5px rgb(35, 35, 35);
+}
+
 .add-user-header {
   display: flex;
   flex-direction: row;
@@ -79,6 +84,11 @@ $primary: #3f51b5;
     border-bottom: 1px solid black;
     outline: none;
     padding: 0 7px;
+
+    &:focus {
+      border-bottom: 2px solid $primary;
+      transition: 0.15s;
+    }
   }
 
   select {
@@ -86,6 +96,25 @@ $primary: #3f51b5;
     border: 0;
     border-bottom: 1px solid black;
     outline: none;
+  }
+}
+
+.add-user-content-dark {
+  .input-group {
+    input {
+      background: #303030;
+      border-color: #fff;
+      color: #fff;
+    }
+    select {
+      background: #303030;
+      border-color: #fff;
+      color: #fff;
+    }
+  }
+  .close-btn {
+    background: inherit;
+    color: #fff;
   }
 }
 
@@ -100,20 +129,10 @@ $primary: #3f51b5;
 }
 
 .confirm-user-btn {
-  padding: 10px;
   position: absolute;
   bottom: 20px;
   right: 20px;
-  background-color: $primary;
   color: #fff;
-  border-radius: 3px;
-  transition: 0.25s;
-
-  &:hover {
-    cursor: pointer;
-    opacity: 0.85;
-    transition: 0.2s;
-  }
 }
 
 .current-connections-container {
@@ -123,4 +142,16 @@ $primary: #3f51b5;
 
 .current-conntections {
   list-style: none;
+}
+
+.empty-fields-alert {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 5;
+}
+
+.choose-user-to-connect {
+  color: #ccc;
+  font-size: 0.9em;
 }

@@ -12,5 +12,5 @@ export interface IUser {
   address: string;
   phone: string;
   company: string;
-  connections: Array<IUser>;
+  connections: Array<string>;
 }

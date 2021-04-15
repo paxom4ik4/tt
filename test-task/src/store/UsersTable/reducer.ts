@@ -18,6 +18,28 @@ export const UsersTableReducer = (state = initialState, action) => {
     case ActionTypes.FETCH_USERS_SUCCESS: {
       return { ...state, isLoading: false, users: action.payload };
     }
+    case ActionTypes.ADD_USER: {
+      const updatedUsers = [...state.users, action.payload];
+      return {
+        ...state,
+        users: updatedUsers,
+      };
+    }
+    case ActionTypes.DELETE_USER: {
+      const deleteUserId = state.users.findIndex(
+        (user) => user.id === action.payload
+      );
+
+      const updatedUsers = [
+        ...state.users.splice(0, deleteUserId),
+        ...state.users.splice(deleteUserId + 1),
+      ];
+
+      return {
+        ...state,
+        users: updatedUsers,
+      };
+    }
     default:
       return state;
   }

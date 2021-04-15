@@ -3,6 +3,9 @@ $white: #ffffff;
 $border-color: #002984;
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   height: 48px;
@@ -12,11 +15,13 @@ $border-color: #002984;
   color: $white;
   margin-bottom: 10px;
   transition: 0.5s;
+  z-index: 10;
 }
 
 .header-dark {
   background-color: #000;
   transition: 0.5s;
+  border-color: #303030;
 }
 
 .header-content {

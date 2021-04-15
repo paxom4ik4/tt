@@ -1,30 +1,62 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import { UsersTable } from "./UsersTable/UsersTable";
+import { AddUser } from "components/AddUser/AddUser";
+import { Button } from "@material-ui/core";
+import { IUser } from "models/IUser";
 
 import "./Users.scss";
-import UsersTable from "./UsersTable";
-import AddUser from "components/AddUser";
 
-const Users: React.FC = (): JSX.Element => {
-  const userIcon = <FontAwesomeIcon icon={faUser} />;
+interface IUsersProps {
+  users: Array<IUser>;
+}
+
+export const Users: React.FC<IUsersProps> = ({ users }): JSX.Element => {
+  const userIcon: JSX.Element = <FontAwesomeIcon icon={faUser} />;
   const [isOnAddUser, setIsOnAddUser] = useState<boolean>(false);
+
+  const [onSuccessCreation, setOnSuccsessCreation] = useState<boolean>(false);
 
   return (
     <div className="users-container">
+      {onSuccessCreation ? (
+        <Alert severity="success" className="success-alert">
+          <AlertTitle>Success</AlertTitle>
+          New user appears in the end of the table —{" "}
+          <strong>check it out!</strong>
+        </Alert>
+      ) : (
+        ""
+      )}
       <div className="users-content">
         <div className="users-content-header">
           <h3 className="users-table-title">Table</h3>
-          <button className="add-user-btn" onClick={() => setIsOnAddUser(true)}>
-            {userIcon} +
-          </button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setIsOnAddUser(true)}
+          >
+            {userIcon} <span style={{ padding: "5px 5px 5px 10px" }}>+</span>
+          </Button>
         </div>
-        <UsersTable />
-        {isOnAddUser ? <AddUser setIsOnAddUser={setIsOnAddUser} /> : ""}
+        {users.length ? (
+          <UsersTable />
+        ) : (
+          <div className="no-users">No users</div>
+        )}
+
+        {isOnAddUser ? (
+          <AddUser
+            setIsOnAddUser={setIsOnAddUser}
+            setOnSuccsessCreation={setOnSuccsessCreation}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
 };
-
-export default Users;

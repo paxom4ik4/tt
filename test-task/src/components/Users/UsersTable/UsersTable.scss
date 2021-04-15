@@ -1,7 +1,11 @@
+$primary: #3f51b5;
+$cell-background: hsl(230, 23%, 90%);
+
 table {
   font-size: 0.85em;
   border-spacing: 0;
   border: 1px solid black;
+  min-width: 1200px;
 
   tr {
     :last-child {
@@ -29,19 +33,56 @@ table td {
   border-bottom: 1px solid black;
 }
 
+.table-header-ceil {
+  width: 80px;
+  max-width: 80px;
+  position: relative;
+}
+
+.arrow-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.users-table-dark {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.users-table-dark {
+  tr {
+    padding: 10px;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  td {
+    border-color: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+  }
+}
+
+.users-table-dark thead tr th {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .users-table-container {
   position: relative;
   margin-top: 30px;
 }
 
 .users-table {
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
   button {
-    background: #fff;
+    background-color: inherit;
     margin: 0 5px;
+    transition: background-color 0.3s;
 
     &:hover {
       cursor: pointer;
@@ -54,5 +95,38 @@ table td {
 
   &:hover {
     opacity: 0.85;
+  }
+}
+
+.average-values {
+  font-size: 0.8em;
+}
+
+tbody tr:nth-child(even) {
+  background-color: $cell-background;
+}
+
+.tbody-dark tr:nth-child(even) {
+  background-color: #000;
+}
+
+tr:first-child {
+  background-color: inherit;
+}
+
+.MuiButton-label {
+  font-size: 0.65em;
+  font-weight: bold;
+}
+
+.users-table-dark .MuiButton-label {
+  color: #fff;
+}
+
+.pagination-dark {
+  button {
+    background: inherit;
+    color: #fff;
+    transition: 0.3s;
   }
 }
