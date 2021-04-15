@@ -34,12 +34,8 @@ export const Users: React.FC<IUsersProps> = ({ users }): JSX.Element => {
       <div className="users-content">
         <div className="users-content-header">
           <h3 className="users-table-title">Table</h3>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setIsOnAddUser(true)}
-          >
-            {userIcon} <span style={{ padding: "5px 5px 5px 10px" }}>+</span>
+          <Button variant="contained" onClick={() => setIsOnAddUser(true)}>
+            {userIcon} <span style={{ padding: "0 0 0 10px" }}>+</span>
           </Button>
         </div>
         {users.length ? (

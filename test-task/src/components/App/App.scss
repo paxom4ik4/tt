@@ -31,10 +31,10 @@
 }
 
 body {
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 .dark-theme {
   background-color: #303030;
   color: #ffffff;
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }

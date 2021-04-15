@@ -32,11 +32,15 @@ export const Header: React.FC<IHeaderProps> = ({ routes }): JSX.Element => {
 
   const currentThemeIcon = appTheme === "dark" ? moonIcon : sunIcon;
   const headerClass = appTheme === "dark" ? "header header-dark" : "header";
+  const themeModeClass = appTheme === "dark" ? "theme-mode-dark" : "theme-mode";
 
   return (
     <div className={headerClass}>
       <div className="header-content">
-        <button className="theme-mode" onClick={() => dispatch(switchTheme())}>
+        <button
+          className={themeModeClass}
+          onClick={() => dispatch(switchTheme())}
+        >
           {currentThemeIcon}
         </button>
         <div className="header-nav">
