@@ -14,10 +14,7 @@ interface IActionPayload {
   payload: IUser | IUser[] | string;
 }
 
-export const UsersTableReducer = (
-  state = initialState,
-  action: IActionPayload
-) => {
+export const usersReducer = (state = initialState, action: IActionPayload) => {
   switch (action.type) {
     case ActionTypes.FETCH_USERS_START: {
       return { ...state, isLoading: true };

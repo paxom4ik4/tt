@@ -2,28 +2,23 @@ import * as React from "react";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { switchTheme } from "store/App/actions";
-import { IRoute } from "models/IRoute";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import "./Header.scss";
 
-interface IHeaderProps {
-  routes: Array<IRoute>;
-}
+const sunIcon: JSX.Element = (
+  <div>
+    <FontAwesomeIcon icon={faSun} />
+  </div>
+);
+const moonIcon: JSX.Element = (
+  <div>
+    <FontAwesomeIcon icon={faMoon} />
+  </div>
+);
 
-export const Header: React.FC<IHeaderProps> = ({ routes }): JSX.Element => {
+export const Header: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
-
-  const sunIcon: JSX.Element = (
-    <div>
-      <FontAwesomeIcon icon={faSun} />
-    </div>
-  );
-  const moonIcon: JSX.Element = (
-    <div>
-      <FontAwesomeIcon icon={faMoon} />
-    </div>
-  );
 
   const appTheme: string = useSelector(
     (state: RootStateOrAny) => state.app.appTheme
@@ -43,17 +38,22 @@ export const Header: React.FC<IHeaderProps> = ({ routes }): JSX.Element => {
           {currentThemeIcon}
         </button>
         <div className="header-nav">
-          {routes.map((route) => (
-            <NavLink
-              className="nav-link"
-              key={route.path}
-              to={route.path}
-              activeClassName="active-link"
-              exact
-            >
-              {route.name}
-            </NavLink>
-          ))}
+          <NavLink
+            className="nav-link"
+            to="/"
+            activeClassName="active-link"
+            exact
+          >
+            Users
+          </NavLink>
+          <NavLink
+            className="nav-link"
+            to="/chart"
+            activeClassName="active-link"
+            exact
+          >
+            Chart
+          </NavLink>
         </div>
       </div>
     </div>

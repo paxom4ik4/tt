@@ -1,10 +1,9 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import "./SearchItem.scss";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { searchUser } from "store/Users/actions";
+import "./SearchItem.scss";
 
 const SearchItem: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();

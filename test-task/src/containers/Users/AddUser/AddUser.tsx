@@ -1,13 +1,11 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IUser } from "../../models/IUser";
+import { IUser } from "../../../models/IUser";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { addUser } from "store/Users/actions";
 import { Button } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-
 import "./AddUser.scss";
 
 interface IAddUserProps {

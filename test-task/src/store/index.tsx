@@ -1,18 +1,12 @@
 import thunk from "redux-thunk";
-import { createStore, applyMiddleware, combineReducers, compose } from "redux";
-import { UsersTableReducer } from "store/Users/reducer";
-import { appReducer } from "store/App/reducer";
+import { createStore, applyMiddleware, compose } from "redux";
+import rootReducer from "./combineReducers";
 
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION__?: typeof compose;
   }
 }
-
-const rootReducer = combineReducers({
-  users: UsersTableReducer,
-  app: appReducer,
-});
 
 const store = createStore(
   rootReducer,

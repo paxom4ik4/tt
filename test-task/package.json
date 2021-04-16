@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --open --config webpack.dev.ts",
-    "build": "webpack --config webpack.prod.ts"
+    "build": "webpack --config webpack.prod.ts",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "keywords": [],
   "author": "",
@@ -46,6 +48,7 @@
     "@types/react-table": "^7.0.29",
     "@types/react-transition-group": "^4.4.1",
     "chart.js": "^2.9.4",
+    "eslint": "^7.24.0",
     "node-sass": "^5.0.0",
     "react": "^17.0.2",
     "react-chartjs-2": "^2.11.1",
@@ -61,5 +64,16 @@
     "redux-thunk": "^2.3.0",
     "use-prefers-color-scheme": "^0.1.1",
     "vis-react": "^0.5.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{src,e2e}/**/*.{js,jsx,less,css,html}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

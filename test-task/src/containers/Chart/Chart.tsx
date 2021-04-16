@@ -1,7 +1,6 @@
 import * as React from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
-
 import "./Chart.scss";
 
 export const ChartContainer: React.FC = (): JSX.Element => {

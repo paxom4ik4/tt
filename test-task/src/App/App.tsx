@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { ChartContainer } from "../common/Chart/Chart";
-import { Users } from "../common/Users/Users";
+import { ChartContainer } from "../containers/Chart/Chart";
+import { Users } from "../containers/Users/Users";
 import { CSSTransition } from "react-transition-group";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Header } from "../common/Header/Header";
@@ -16,6 +16,14 @@ import "./App.scss";
 
 export const App: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
+
+  const users: Array<IUser> = useSelector(
+    (state: RootStateOrAny) => state.users.users
+  );
+  const appTheme: string = useSelector(
+    (state: RootStateOrAny) => state.app.appTheme
+  );
+
   const preferredColorSchema: string = usePrefersColorScheme();
   const isDarkMode: boolean = preferredColorSchema === "dark";
 
@@ -26,44 +34,24 @@ export const App: React.FC = (): JSX.Element => {
     dispatch(getUsers());
   }, []);
 
-  const users: Array<IUser> = useSelector(
-    (state: RootStateOrAny) => state.users.users
-  );
-
-  const routes: Array<IRoute> = [
-    { path: "/", name: "Users", Component: <Users users={users} /> },
-    { path: "/charts", name: "Chart", Component: <ChartContainer /> },
-  ];
-
-  const appTheme: string = useSelector(
-    (state: RootStateOrAny) => state.app.appTheme
-  );
-
-  appTheme === "dark"
-    ? document.body.classList.add("dark-theme")
-    : document.body.classList.remove("dark-theme");
+  const containerTheme =
+    appTheme === "dark"
+      ? "app-container dark-theme"
+      : "app-container light-theme";
 
   return (
     <Router>
-      <Header routes={routes} />
-      <Switch>
-        <>
-          {routes.map(({ path, Component }) => (
-            <Route key={path} exact path={path}>
-              {({ match }) => (
-                <CSSTransition
-                  in={match != null}
-                  timeout={300}
-                  classNames="page"
-                  unmountOnExit
-                >
-                  <div className="page">{Component}</div>
-                </CSSTransition>
-              )}
-            </Route>
-          ))}
-        </>
-      </Switch>
+      <div className={containerTheme}>
+        <Header />
+        <Switch>
+          <Route path="/" exact>
+            <Users users={users} />
+          </Route>
+          <Route path="/chart" exact>
+            <ChartContainer />
+          </Route>
+        </Switch>
+      </div>
     </Router>
   );
 };

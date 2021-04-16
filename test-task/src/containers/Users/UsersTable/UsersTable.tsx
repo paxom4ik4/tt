@@ -23,7 +23,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Button, Tooltip } from "@material-ui/core";
 import { IUser } from "models/IUser";
-
 import "./UsersTable.scss";
 
 interface IUsersTableProps {

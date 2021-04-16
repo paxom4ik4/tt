@@ -4,12 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { UsersTable } from "./UsersTable/UsersTable";
-import { AddUser } from "common/AddUser/AddUser";
+import { AddUser } from "containers/Users/AddUser/AddUser";
 import { Button } from "@material-ui/core";
 import { IUser } from "models/IUser";
-
+import SearchItem from "./SeachItem/SearchItem";
 import "./Users.scss";
-import SearchItem from "./UsersTable/SeachItem/SearchItem";
 
 interface IUsersProps {
   users: Array<IUser>;
