@@ -29,6 +29,16 @@ export const deleteUser = (id: string) => ({
   payload: id,
 });
 
+export const copyUser = (id: string) => ({
+  type: ActionTypes.COPY_USER,
+  payload: id,
+});
+
+export const searchUser = (name: string) => ({
+  type: ActionTypes.SEARCH_USERS,
+  payload: name,
+});
+
 export const getUsers = () => (dispatch: Dispatch<Action>) => {
   dispatch(fetchUsersStart());
 

@@ -1,0 +1,30 @@
+.search-user-container {
+  position: relative;
+
+  .search-user-input {
+    border: none;
+    outline: none;
+    border: 1px solid;
+    border-color: #000;
+  }
+}
+
+.search-user-container-dark {
+  .search-user-input {
+    background: initial;
+    color: rgb(175, 175, 175);
+    border-color: rgb(86, 86, 86);
+  }
+}
+
+.search-user-input {
+  padding: 0 30px;
+  height: 30px !important;
+}
+
+.search-icon {
+  top: 50%;
+  left: 15px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}

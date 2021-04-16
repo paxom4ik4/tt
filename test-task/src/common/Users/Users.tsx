@@ -9,6 +9,7 @@ import { Button } from "@material-ui/core";
 import { IUser } from "models/IUser";
 
 import "./Users.scss";
+import SearchItem from "./UsersTable/SeachItem/SearchItem";
 
 interface IUsersProps {
   users: Array<IUser>;
@@ -17,6 +18,20 @@ interface IUsersProps {
 export const Users: React.FC<IUsersProps> = ({ users }): JSX.Element => {
   const userIcon: JSX.Element = <FontAwesomeIcon icon={faUser} />;
   const [isOnAddUser, setIsOnAddUser] = useState<boolean>(false);
+  const [userDeleted, setUserDeleted] = useState<boolean>(false);
+  const [isDataFullfield, setIsDataFullfield] = useState<boolean>(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setUserDeleted(false);
+    }, 2500);
+  }, [userDeleted]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsDataFullfield(true);
+    }, 2500);
+  }, [isDataFullfield]);
 
   const [onSuccessCreation, setOnSuccsessCreation] = useState<boolean>(false);
 
@@ -31,21 +46,37 @@ export const Users: React.FC<IUsersProps> = ({ users }): JSX.Element => {
       ) : (
         ""
       )}
+      {userDeleted ? (
+        <Alert severity="info" className="success-alert">
+          <AlertTitle>Deleted</AlertTitle>
+          User has successfully been deleted
+        </Alert>
+      ) : (
+        ""
+      )}
+      {isDataFullfield ? (
+        ""
+      ) : (
+        <Alert severity="error" className="empty-fields-alert">
+          Check input data. All fields should not be empty!
+        </Alert>
+      )}
       <div className="users-content">
         <div className="users-content-header">
-          <h3 className="users-table-title">Table</h3>
+          <SearchItem />
           <Button variant="contained" onClick={() => setIsOnAddUser(true)}>
             {userIcon} <span style={{ padding: "0 0 0 10px" }}>+</span>
           </Button>
         </div>
         {users.length ? (
-          <UsersTable />
+          <UsersTable setUserDeleted={setUserDeleted} />
         ) : (
           <div className="no-users">No users</div>
         )}
 
         {isOnAddUser ? (
           <AddUser
+            setIsDataFullfield={setIsDataFullfield}
             setIsOnAddUser={setIsOnAddUser}
             setOnSuccsessCreation={setOnSuccsessCreation}
           />
