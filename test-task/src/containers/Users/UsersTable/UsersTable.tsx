@@ -1,18 +1,14 @@
 import { copyUser, deleteUser } from "store/Users/actions";
 import * as React from "react";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { useState } from "react";
 import { css } from "@emotion/core";
-import ClipLoader from "react-spinners/ClipLoader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NotificationContainer } from "react-notifications";
 import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
@@ -24,16 +20,9 @@ import {
 import { Button, Tooltip } from "@material-ui/core";
 import { IUser } from "models/IUser";
 import "./UsersTable.scss";
+import UserDialog from "common/Dialog/Dialog";
 
-interface IUsersTableProps {
-  setUserDeleted: (state: boolean) => void;
-}
-
-export const UsersTable: React.FC<IUsersTableProps> = ({
-  setUserDeleted,
-}): JSX.Element => {
-  const dispatch = useDispatch();
-
+export const UsersTable: React.FC = (): JSX.Element => {
   const appTheme: string = useSelector(
     (state: RootStateOrAny) => state.app.appTheme
   );
@@ -52,29 +41,26 @@ export const UsersTable: React.FC<IUsersTableProps> = ({
     border-color: black;
   `;
 
-  const [onDelete, setOnDelete] = useState<boolean>(false);
-  const [onCopy, setOnCopy] = useState<boolean>(false);
   const [deleteUserId, setDeleteUserId] = useState<string>("");
   const [copyUserId, setCopyUserId] = useState<string>("");
 
-  const isTableLoading = useSelector(
-    (state: RootStateOrAny) => state.users.isLoading
-  );
+  const [onDelete, setOnDelete] = useState<boolean>(false);
+  const [onCopy, setOnCopy] = useState<boolean>(false);
 
-  const copyClickOpen = (): void => {
-    setOnCopy(true);
+  const handleDeleteClose = () => {
+    setOnDelete(false);
   };
 
-  const copyClickClose = (): void => {
-    setOnCopy(false);
-  };
-
-  const handleClickOpen = (): void => {
+  const handleDeleteOpen = () => {
     setOnDelete(true);
   };
 
-  const handleClose = (): void => {
-    setOnDelete(false);
+  const handleCopyClose = () => {
+    setOnCopy(false);
+  };
+
+  const handleCopyOpen = () => {
+    setOnCopy(true);
   };
 
   const angleRigthIcon: JSX.Element = <FontAwesomeIcon icon={faAngleRight} />;
@@ -86,18 +72,14 @@ export const UsersTable: React.FC<IUsersTableProps> = ({
     <FontAwesomeIcon icon={faAngleDoubleLeft} />
   );
 
-  const deleteUserHandler = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ): void => {
-    handleClickOpen();
-    setDeleteUserId(event.currentTarget.getAttribute("id"));
+  const deleteUserHandler = (id: string): void => {
+    setDeleteUserId(id);
+    handleDeleteOpen();
   };
 
-  const copyUserHandler = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ): void => {
-    copyClickOpen();
-    setCopyUserId(event.currentTarget.getAttribute("id"));
+  const copyUserHandler = (id: string): void => {
+    setCopyUserId(id);
+    handleCopyOpen();
   };
 
   interface IIconProps {
@@ -109,7 +91,7 @@ export const UsersTable: React.FC<IUsersTableProps> = ({
       <div
         id={userId}
         className="delete-user-btn"
-        onClick={(event) => deleteUserHandler(event)}
+        onClick={() => deleteUserHandler(userId)}
       >
         <FontAwesomeIcon icon={faTrash} />
       </div>
@@ -121,7 +103,7 @@ export const UsersTable: React.FC<IUsersTableProps> = ({
       <div
         id={userId}
         className="copy-user-btn"
-        onClick={(event) => copyUserHandler(event)}
+        onClick={() => copyUserHandler(userId)}
       >
         <FontAwesomeIcon icon={faCopy} />
       </div>
@@ -134,7 +116,7 @@ export const UsersTable: React.FC<IUsersTableProps> = ({
 
   const connectionConverter = (text: Array<string>): string => {
     if (text.length) {
-      return text.join(" ");
+      return text.join(", ");
     }
     return "No connections";
   };
@@ -258,6 +240,7 @@ export const UsersTable: React.FC<IUsersTableProps> = ({
 
     return (
       <>
+        <NotificationContainer />
         <div className={paginationClass}>
           <div className="table-controls">
             <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
@@ -354,81 +337,19 @@ export const UsersTable: React.FC<IUsersTableProps> = ({
 
   return (
     <div className="users-table-container">
-      {isTableLoading ? (
-        <ClipLoader
-          color="#ffffff"
-          loading={isTableLoading}
-          css={override}
-          size={50}
-        />
-      ) : (
-        <>
-          <Table columns={columns} data={users} />
-          <Dialog
-            open={onDelete}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Confirm Action"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are you sure want delete user?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                No
-              </Button>
-              <Button
-                onClick={() => {
-                  dispatch(deleteUser(deleteUserId));
-                  setUserDeleted(true);
-                  handleClose();
-                }}
-                color="primary"
-                autoFocus
-              >
-                Yes
-              </Button>
-            </DialogActions>
-          </Dialog>
-
-          <Dialog
-            open={onCopy}
-            onClose={copyClickClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Confirm Action"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are you sure want delete user?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={copyClickClose} color="primary">
-                No
-              </Button>
-              <Button
-                onClick={() => {
-                  dispatch(copyUser(copyUserId));
-                  // setUserCopied(true);
-                  copyClickClose();
-                }}
-                color="primary"
-                autoFocus
-              >
-                Yes
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </>
-      )}
+      <Table columns={columns} data={users} />
+      <UserDialog
+        onOpen={onDelete}
+        handleClose={handleDeleteClose}
+        userAction={deleteUser}
+        userId={deleteUserId}
+      />
+      <UserDialog
+        onOpen={onCopy}
+        handleClose={handleCopyClose}
+        userAction={copyUser}
+        userId={copyUserId}
+      />
     </div>
   );
 };

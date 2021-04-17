@@ -18,7 +18,7 @@ const config: webpack.Configuration = {
     rules: [
       { test: /\.tsx?$/, loader: "ts-loader" },
       {
-        test: /\.s[ac]ss$/i,
+        test: [/\.s[ac]ss$/i, /\.css$/i],
         use: [
           {
             loader: "style-loader",

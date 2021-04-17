@@ -6,18 +6,17 @@ import { useState, useEffect } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { addUser } from "store/Users/actions";
 import { Button } from "@material-ui/core";
+import { v4 as uuidv4 } from "uuid";
 import "./AddUser.scss";
 
 interface IAddUserProps {
   setIsOnAddUser: (state: boolean) => void;
-  setOnSuccsessCreation: (state: boolean) => void;
-  setIsDataFullfield: (state: boolean) => void;
 }
+
+const closeIcon: JSX.Element = <FontAwesomeIcon icon={faTimes} />;
 
 export const AddUser: React.FC<IAddUserProps> = ({
   setIsOnAddUser,
-  setOnSuccsessCreation,
-  setIsDataFullfield,
 }): JSX.Element => {
   const dispatch = useDispatch();
 
@@ -27,31 +26,21 @@ export const AddUser: React.FC<IAddUserProps> = ({
       ? "add-user-content add-user-content-dark"
       : "add-user-content";
 
-  const closeIcon: JSX.Element = <FontAwesomeIcon icon={faTimes} />;
-
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [age, setAge] = useState<string>("");
-  const [country, setCountry] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [company, setCompany] = useState<string>("");
-  const [role, setRole] = useState<string>("client");
-  const [connections, setConnections] = useState<Array<string>>([]);
-  const [conntection, setConnection] = useState("");
-
-  const setConnectionsHadnler = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setConnection(event.target.value);
-  };
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    age: 0,
+    country: "",
+    city: "",
+    address: "",
+    phone: "",
+    company: "",
+    role: "",
+  });
 
   const [clients, setClients] = useState<Array<IUser>>([]);
-
-  const users: Array<IUser> = useSelector(
-    (state: RootStateOrAny) => state.users.users
-  );
+  const [connections, setConnections] = useState<Array<string>>([]);
+  const [conntection, setConnection] = useState("");
 
   useEffect(() => {
     const userClients: Array<IUser> = users.filter(
@@ -59,6 +48,16 @@ export const AddUser: React.FC<IAddUserProps> = ({
     );
     setClients(userClients);
   }, []);
+
+  const setConnectionsHadnler = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
+    setConnection(event.target.value);
+  };
+
+  const users: Array<IUser> = useSelector(
+    (state: RootStateOrAny) => state.users.users
+  );
 
   const addCurrentConnection = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -84,44 +83,19 @@ export const AddUser: React.FC<IAddUserProps> = ({
   );
 
   const addNewUserHandler = (): void => {
-    if (
-      firstName &&
-      lastName &&
-      role &&
-      age &&
-      country &&
-      city &&
-      address &&
-      phone &&
-      company
-    ) {
+    if (formData.firstName && formData.lastName) {
       const newUser: IUser = {
-        id: users.length.toString(),
-        firstName,
-        lastName,
+        ...formData,
+        id: uuidv4(),
         avatar: "",
-        role,
-        lastLoggedIn: "offline",
         profileViews: 0,
-        age: Number(age),
-        country,
-        city,
-        address,
-        phone,
-        company,
+        lastLoggedIn: "",
         connections,
       };
 
       dispatch(addUser(newUser));
       setIsOnAddUser(false);
-
-      setOnSuccsessCreation(true);
-      setTimeout(() => {
-        setOnSuccsessCreation(false);
-      }, 2000);
-    }
-
-    setIsDataFullfield(false);
+    } 
   };
 
   return (
@@ -145,64 +119,104 @@ export const AddUser: React.FC<IAddUserProps> = ({
                 <label htmlFor="firstName">First Name</label>
                 <input
                   id="firstName"
-                  value={firstName}
-                  onChange={(event) => setFirstName(event.currentTarget.value)}
+                  value={formData.firstName}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      firstName: event.currentTarget.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-group">
                 <label htmlFor="lastName">Last Name</label>
                 <input
                   id="lastName"
-                  value={lastName}
-                  onChange={(event) => setLastName(event.currentTarget.value)}
+                  value={formData.lastName}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      lastName: event.currentTarget.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-group">
                 <label htmlFor="age">Age</label>
                 <input
                   id="age"
-                  value={age}
-                  onChange={(event) => setAge(event.currentTarget.value)}
+                  value={formData.age}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      age: Number(event.currentTarget.value),
+                    })
+                  }
                 />
               </div>
               <div className="input-group">
                 <label htmlFor="country">Country</label>
                 <input
                   id="country"
-                  value={country}
-                  onChange={(event) => setCountry(event.currentTarget.value)}
+                  value={formData.country}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      country: event.currentTarget.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-group">
                 <label htmlFor="city">City</label>
                 <input
                   id="city"
-                  value={city}
-                  onChange={(event) => setCity(event.currentTarget.value)}
+                  value={formData.city}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      city: event.currentTarget.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-group">
                 <label htmlFor="address">Address</label>
                 <input
                   id="address"
-                  value={address}
-                  onChange={(event) => setAddress(event.currentTarget.value)}
+                  value={formData.address}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      address: event.currentTarget.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-group">
                 <label htmlFor="phone">Phone</label>
                 <input
                   id="phone"
-                  value={phone}
-                  onChange={(event) => setPhone(event.currentTarget.value)}
+                  value={formData.phone}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      phone: event.currentTarget.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-group">
                 <label htmlFor="company">Company</label>
                 <input
                   id="company"
-                  value={company}
-                  onChange={(event) => setCompany(event.currentTarget.value)}
+                  value={formData.company}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      company: event.currentTarget.value,
+                    })
+                  }
                 />
               </div>
             </div>
@@ -213,7 +227,12 @@ export const AddUser: React.FC<IAddUserProps> = ({
               <select
                 name="role"
                 id="tole"
-                onChange={(event) => setRole(event.target.value)}
+                onChange={(event) =>
+                  setFormData({
+                    ...formData,
+                    role: event.currentTarget.value,
+                  })
+                }
               >
                 <option value="client">Client</option>
                 <option value="lawyer">Lawyer</option>

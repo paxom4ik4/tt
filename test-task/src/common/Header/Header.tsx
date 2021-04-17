@@ -17,7 +17,11 @@ const moonIcon: JSX.Element = (
   </div>
 );
 
-export const Header: React.FC = (): JSX.Element => {
+interface IHeaderProps {
+  setCookie: (name: string, value: any) => void;
+}
+
+export const Header: React.FC<IHeaderProps> = ({ setCookie }): JSX.Element => {
   const dispatch = useDispatch();
 
   const appTheme: string = useSelector(
@@ -33,7 +37,14 @@ export const Header: React.FC = (): JSX.Element => {
       <div className="header-content">
         <button
           className={themeModeClass}
-          onClick={() => dispatch(switchTheme())}
+          onClick={() => {
+            if (appTheme === "dark") {
+              setCookie("appTheme", "light");
+            } else {
+              setCookie("appTheme", "dark");
+            }
+            dispatch(switchTheme());
+          }}
         >
           {currentThemeIcon}
         </button>
