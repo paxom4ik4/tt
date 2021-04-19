@@ -1,5 +1,5 @@
-import { searchIcon } from "common/Icons/Icons";
 import * as React from "react";
+import { searchIcon } from "common/Icons/Icons";
 import { useDispatch } from "react-redux";
 import { searchUsers } from "store/Users/actions";
 import "./SearchItem.scss";

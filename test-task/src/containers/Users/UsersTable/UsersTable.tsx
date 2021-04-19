@@ -1,13 +1,12 @@
-import { copyUser, deleteUser } from "store/Users/actions";
 import * as React from "react";
+import { copyUser, deleteUser } from "store/Users/actions";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { RootStateOrAny, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { useState } from "react";
 import { Button, Tooltip } from "@material-ui/core";
 import { IUser } from "models/IUser";
-import "./UsersTable.scss";
 import UserDialog from "common/Dialog/Dialog";
 import {
   angleDoubleLeftIcon,
@@ -17,6 +16,8 @@ import {
   copyIcon,
   transhIcon,
 } from "common/Icons/Icons";
+import "./UsersTable.scss";
+import { State } from "models/state";
 
 export const UsersTable: React.FC = (): JSX.Element => {
   const [deleteUserId, setDeleteUserId] = useState<string>("");
@@ -25,19 +26,19 @@ export const UsersTable: React.FC = (): JSX.Element => {
   const [onDelete, setOnDelete] = useState<boolean>(false);
   const [onCopy, setOnCopy] = useState<boolean>(false);
 
-  const handleDeleteClose = () => {
+  const handleDeleteClose = (): void => {
     setOnDelete(false);
   };
 
-  const handleDeleteOpen = () => {
+  const handleDeleteOpen = (): void => {
     setOnDelete(true);
   };
 
-  const handleCopyClose = () => {
+  const handleCopyClose = (): void => {
     setOnCopy(false);
   };
 
-  const handleCopyOpen = () => {
+  const handleCopyOpen = (): void => {
     setOnCopy(true);
   };
 
@@ -79,9 +80,7 @@ export const UsersTable: React.FC = (): JSX.Element => {
     );
   };
 
-  const users: Array<IUser> = useSelector(
-    (state: RootStateOrAny) => state.users.users
-  );
+  const users: Array<IUser> = useSelector((state: State) => state.users.users);
 
   const connectionConverter = (text: Array<string>): string => {
     if (text.length) {

@@ -1,19 +1,28 @@
 import * as React from "react";
-import { RootStateOrAny, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import { IUser } from "models/IUser";
+import { State } from "models/state";
 import "./Chart.scss";
 
 export const ChartContainer: React.FC = (): JSX.Element => {
-  const users = useSelector((state: RootStateOrAny) => state.users.users);
+  const users: Array<IUser> = useSelector((state: State) => state.users.users);
 
-  const usersData = [];
+  interface IUserData {
+    userName: string;
+    userAge: number;
+    profileViews: number;
+    connections: string;
+  }
+
+  const usersData: Array<IUserData> = [];
+
   users.forEach((user: IUser) => {
     usersData.push({
       userName: user.firstName + " " + user.lastName,
       userAge: user.age,
       profileViews: user.profileViews,
-      connections: user.connections.length,
+      connections: user.connections.length.toString(),
     });
   });
 

@@ -1,9 +1,10 @@
 import * as React from "react";
 import { switchTheme } from "store/App/actions";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import "./Header.scss";
 import { moonIcon, sunIcon } from "common/Icons/Icons";
+import { State } from "models/state";
+import "./Header.scss";
 
 interface IHeaderProps {
   setCookie: (name: string, value: any) => void;
@@ -11,11 +12,7 @@ interface IHeaderProps {
 
 export const Header: React.FC<IHeaderProps> = ({ setCookie }): JSX.Element => {
   const dispatch = useDispatch();
-
-  const appTheme: string = useSelector(
-    (state: RootStateOrAny) => state.app.appTheme
-  );
-
+  const appTheme: string = useSelector((state: State) => state.app.appTheme);
   const currentThemeIcon = appTheme === "dark" ? moonIcon : sunIcon;
 
   return (

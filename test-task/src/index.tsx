@@ -1,8 +1,8 @@
-import { App } from "./App/App";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Provider } from "react-redux";
 import store from "store";
+import { App } from "./App/App";
+import { Provider } from "react-redux";
 import { useMediaPredicate } from "react-media-hook";
 import "./index.scss";
 

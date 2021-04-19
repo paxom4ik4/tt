@@ -19,10 +19,22 @@ export const AddUser: React.FC<IAddUserProps> = ({
 }): JSX.Element => {
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
+  interface IFormData {
+    firstName: string;
+    lastName: string;
+    age: number;
+    country: string;
+    city: string;
+    address: string;
+    phone: string;
+    company: string;
+    role: string;
+  }
+
+  const [formData, setFormData] = useState<IFormData>({
     firstName: "",
     lastName: "",
-    age: 0,
+    age: null,
     country: "",
     city: "",
     address: "",

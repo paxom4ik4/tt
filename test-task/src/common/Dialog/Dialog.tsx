@@ -7,7 +7,6 @@ import {
   DialogTitle,
   Button,
 } from "@material-ui/core";
-
 import { useDispatch } from "react-redux";
 import { store } from "react-notifications-component";
 import { copyUser, deleteUser } from "common/Notification/NotificationTypes";
