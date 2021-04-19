@@ -5,13 +5,12 @@ import { ActionTypes } from "./constants";
 const initialState: IAppInitialState = {
   isLoading: false,
   users: [],
-  usersCopy: [],
   error: null,
 };
 
 interface IActionPayload {
   type: string;
-  payload: IUser | IUser[] | string;
+  payload: Array<IUser> | IUser | string;
 }
 
 export const usersReducer = (state = initialState, action: IActionPayload) => {
@@ -62,33 +61,13 @@ export const usersReducer = (state = initialState, action: IActionPayload) => {
 
       return {
         ...state,
-        usersCopy: updatedUsers,
         users: updatedUsers,
       };
     }
     case ActionTypes.SEARCH_USERS: {
-      const searchUsers = [
-        ...state.users.filter(
-          (user) =>
-            user.firstName
-              .toLowerCase()
-              .includes(action.payload.toString().toLowerCase()) ||
-            user.lastName
-              .toLowerCase()
-              .includes(action.payload.toString().toLowerCase())
-        ),
-      ];
-
-      if (action.payload === "") {
-        return {
-          ...state,
-          users: state.usersCopy,
-        };
-      }
       return {
         ...state,
-        copyUsers: state.users,
-        users: searchUsers,
+        users: action.payload,
       };
     }
     default:

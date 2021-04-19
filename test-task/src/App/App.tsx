@@ -9,6 +9,10 @@ import { getUsers } from "store/Users/actions";
 import { IUser } from "models/IUser";
 import { switchTheme } from "store/App/actions";
 import { useCookies } from "react-cookie";
+import SwipeableRoutes from "react-swipeable-routes";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+
 import "./App.scss";
 
 interface IAppProps {
@@ -27,16 +31,15 @@ export const App: React.FC<IAppProps> = ({ isDarkMode }): JSX.Element => {
 
   const [cookies, setCookie] = useCookies(["app_theme"]);
 
-  console.log(isDarkMode);
-
   useEffect(() => {
     if (cookies.appTheme) {
       if (cookies.appTheme === "dark") {
-        dispatch(switchTheme());
+        dispatch(switchTheme("dark"));
+      } else {
+        setCookie("appTheme", "light");
       }
-      setCookie("appTheme", "light");
     } else {
-      isDarkMode && dispatch(switchTheme());
+      isDarkMode && dispatch(switchTheme("dark"));
     }
     dispatch(getUsers());
   }, []);
@@ -50,13 +53,16 @@ export const App: React.FC<IAppProps> = ({ isDarkMode }): JSX.Element => {
     <Router>
       <div className={containerTheme}>
         <Header setCookie={setCookie} />
+        <ReactNotification />
         <Switch>
-          <Route path="/" exact>
-            <Users users={users} />
-          </Route>
-          <Route path="/chart" exact>
-            <ChartContainer />
-          </Route>
+          <SwipeableRoutes>
+            <Route path="/" exact>
+              <Users users={users} />
+            </Route>
+            <Route path="/chart" exact>
+              <ChartContainer />
+            </Route>
+          </SwipeableRoutes>
         </Switch>
       </div>
     </Router>

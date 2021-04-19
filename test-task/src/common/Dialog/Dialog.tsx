@@ -9,13 +9,15 @@ import {
 } from "@material-ui/core";
 
 import { useDispatch } from "react-redux";
-import { createNotification } from "common/Notification/NotificationCreator";
+import { store } from "react-notifications-component";
+import { copyUser, deleteUser } from "common/Notification/NotificationTypes";
 
 interface IUserDialogProps {
   onOpen: boolean;
   handleClose: () => void;
   userAction: (arg: any) => void;
   userId: string;
+  notificationType: string;
 }
 
 const UserDialog: React.FC<IUserDialogProps> = ({
@@ -23,8 +25,13 @@ const UserDialog: React.FC<IUserDialogProps> = ({
   handleClose,
   userAction,
   userId,
+  notificationType,
 }) => {
   const dispatch = useDispatch();
+
+  const notificationConfig =
+    notificationType === "delete" ? deleteUser : copyUser;
+
   return (
     <Dialog
       open={onOpen}
@@ -45,7 +52,7 @@ const UserDialog: React.FC<IUserDialogProps> = ({
         <Button
           onClick={() => {
             dispatch(userAction(userId));
-            createNotification("error");
+            store.addNotification(notificationConfig);
             handleClose();
           }}
           color="primary"

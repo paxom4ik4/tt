@@ -34,11 +34,6 @@ export const copyUser = (id: string) => ({
   payload: id,
 });
 
-export const searchUser = (name: string) => ({
-  type: ActionTypes.SEARCH_USERS,
-  payload: name,
-});
-
 export const getUsers = () => (dispatch: Dispatch<Action>) => {
   dispatch(fetchUsersStart());
 
@@ -46,4 +41,13 @@ export const getUsers = () => (dispatch: Dispatch<Action>) => {
     .getUsers()
     .then((data) => dispatch(fetchUsersSuccess(data)))
     .catch((err) => dispatch(fetchUsersFailure(err.message)));
+};
+
+export const searchUsers = (searchTitle: string) => {
+  return (dispatch: Dispatch<Action>) => {
+    userApi
+      .serachUsers(searchTitle)
+      .then((data) => dispatch(fetchUsersSuccess(data)))
+      .catch((err) => dispatch(fetchUsersFailure(err.message)));
+  };
 };

@@ -7,6 +7,8 @@ import { Button } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import "./AddUser.scss";
 import { closeIcon } from "common/Icons/Icons";
+import { store } from "react-notifications-component";
+import { dataFullfield } from "common/Notification/NotificationTypes";
 
 interface IAddUserProps {
   setIsOnAddUser: (state: boolean) => void;
@@ -83,9 +85,10 @@ export const AddUser: React.FC<IAddUserProps> = ({
         lastLoggedIn: "",
         connections,
       };
-
       dispatch(addUser(newUser));
       setIsOnAddUser(false);
+    } else {
+      store.addNotification(dataFullfield);
     }
   };
 

@@ -5,7 +5,6 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { RootStateOrAny, useSelector } from "react-redux";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { useState } from "react";
-import { NotificationContainer } from "react-notifications";
 import { Button, Tooltip } from "@material-ui/core";
 import { IUser } from "models/IUser";
 import "./UsersTable.scss";
@@ -122,18 +121,6 @@ export const UsersTable: React.FC = (): JSX.Element => {
             accessor: "country",
           },
           {
-            Header: "City",
-            accessor: "city",
-          },
-          {
-            Header: "Address",
-            accessor: "address",
-          },
-          {
-            Header: "Phone",
-            accessor: "phone",
-          },
-          {
             Header: "Company",
             accessor: "company",
           },
@@ -201,7 +188,7 @@ export const UsersTable: React.FC = (): JSX.Element => {
         data,
         initialState: {
           pageIndex: 0,
-          pageSize: 7,
+          pageSize: 10,
         },
       },
       useSortBy,
@@ -210,7 +197,6 @@ export const UsersTable: React.FC = (): JSX.Element => {
 
     return (
       <>
-        <NotificationContainer />
         <div className="pagination">
           <div className="table-controls">
             <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
@@ -313,12 +299,14 @@ export const UsersTable: React.FC = (): JSX.Element => {
         handleClose={handleDeleteClose}
         userAction={deleteUser}
         userId={deleteUserId}
+        notificationType="delete"
       />
       <UserDialog
         onOpen={onCopy}
         handleClose={handleCopyClose}
         userAction={copyUser}
         userId={copyUserId}
+        notificationType="copy"
       />
     </div>
   );

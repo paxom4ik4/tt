@@ -68,15 +68,14 @@ table td {
 }
 
 .table-header-ceil {
-  width: 75px;
-  max-width: 75px;
+  padding: 5px 20px !important;
   position: relative;
 }
 
 .arrow-icon {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 2px;
+  right: 2px;
 }
 
 .dark-theme {
@@ -160,7 +159,7 @@ tr:first-child {
 }
 
 .dark-theme .MuiButton-label {
-  color: #fff;
+  color: #ccc;
 }
 
 .dark-theme .pagination {

@@ -8,13 +8,17 @@ const initialState: IAppReducerState = {
   appTheme: "light",
 };
 
-export const appReducer = (state = initialState, action) => {
+interface IAppAction {
+  type: string;
+  payload: string;
+}
+
+export const appReducer = (state = initialState, action: IAppAction) => {
   switch (action.type) {
     case ActionTypes.SWITCH_THEME: {
-      const nextTheme = state.appTheme === "dark" ? "light" : "dark";
       return {
         ...state,
-        appTheme: nextTheme,
+        appTheme: action.payload,
       };
     }
 

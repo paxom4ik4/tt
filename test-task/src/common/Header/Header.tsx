@@ -27,7 +27,9 @@ export const Header: React.FC<IHeaderProps> = ({ setCookie }): JSX.Element => {
             appTheme === "dark"
               ? setCookie("appTheme", "light")
               : setCookie("appTheme", "dark");
-            dispatch(switchTheme());
+            appTheme === "dark"
+              ? dispatch(switchTheme("light"))
+              : dispatch(switchTheme("dark"));
           }}
         >
           {currentThemeIcon}
