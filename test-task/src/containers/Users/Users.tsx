@@ -1,12 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { UsersTable } from "./UsersTable/UsersTable";
 import { AddUser } from "containers/Users/AddUser/AddUser";
 import { Button } from "@material-ui/core";
 import { IUser } from "models/IUser";
 import SearchItem from "./SeachItem/SearchItem";
+import { userIcon } from "common/Icons/Icons";
 import "./Users.scss";
 
 interface IUsersProps {
@@ -14,7 +13,6 @@ interface IUsersProps {
 }
 
 export const Users: React.FC<IUsersProps> = ({ users }): JSX.Element => {
-  const userIcon: JSX.Element = <FontAwesomeIcon icon={faUser} />;
   const [isOnAddUser, setIsOnAddUser] = useState<boolean>(false);
 
   return (

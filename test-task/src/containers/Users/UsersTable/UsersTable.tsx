@@ -1,46 +1,25 @@
 import { copyUser, deleteUser } from "store/Users/actions";
 import * as React from "react";
-
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
+import { RootStateOrAny, useSelector } from "react-redux";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { useState } from "react";
-import { css } from "@emotion/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NotificationContainer } from "react-notifications";
-import {
-  faAngleDoubleLeft,
-  faAngleDoubleRight,
-  faAngleLeft,
-  faAngleRight,
-  faCopy,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
 import { Button, Tooltip } from "@material-ui/core";
 import { IUser } from "models/IUser";
 import "./UsersTable.scss";
 import UserDialog from "common/Dialog/Dialog";
+import {
+  angleDoubleLeftIcon,
+  angleDoubleRigthIcon,
+  angleLeftIcon,
+  angleRigthIcon,
+  copyIcon,
+  transhIcon,
+} from "common/Icons/Icons";
 
 export const UsersTable: React.FC = (): JSX.Element => {
-  const appTheme: string = useSelector(
-    (state: RootStateOrAny) => state.app.appTheme
-  );
-
-  const tbodyClass = appTheme === "dark" ? "tbody-dark" : "";
-  const usersTableClass =
-    appTheme === "dark" ? "users-table users-table-dark" : "users-table";
-  const paginationClass =
-    appTheme === "dark" ? "pagination pagination-dark" : "pagination";
-
-  const override = css`
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-color: black;
-  `;
-
   const [deleteUserId, setDeleteUserId] = useState<string>("");
   const [copyUserId, setCopyUserId] = useState<string>("");
 
@@ -63,15 +42,6 @@ export const UsersTable: React.FC = (): JSX.Element => {
     setOnCopy(true);
   };
 
-  const angleRigthIcon: JSX.Element = <FontAwesomeIcon icon={faAngleRight} />;
-  const angleLeftIcon: JSX.Element = <FontAwesomeIcon icon={faAngleLeft} />;
-  const angleDoubleRigthIcon: JSX.Element = (
-    <FontAwesomeIcon icon={faAngleDoubleRight} />
-  );
-  const angleDoubleLeftIcon: JSX.Element = (
-    <FontAwesomeIcon icon={faAngleDoubleLeft} />
-  );
-
   const deleteUserHandler = (id: string): void => {
     setDeleteUserId(id);
     handleDeleteOpen();
@@ -93,7 +63,7 @@ export const UsersTable: React.FC = (): JSX.Element => {
         className="delete-user-btn"
         onClick={() => deleteUserHandler(userId)}
       >
-        <FontAwesomeIcon icon={faTrash} />
+        {transhIcon}
       </div>
     );
   };
@@ -105,7 +75,7 @@ export const UsersTable: React.FC = (): JSX.Element => {
         className="copy-user-btn"
         onClick={() => copyUserHandler(userId)}
       >
-        <FontAwesomeIcon icon={faCopy} />
+        {copyIcon}
       </div>
     );
   };
@@ -241,7 +211,7 @@ export const UsersTable: React.FC = (): JSX.Element => {
     return (
       <>
         <NotificationContainer />
-        <div className={paginationClass}>
+        <div className="pagination">
           <div className="table-controls">
             <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
               {angleDoubleLeftIcon}
@@ -286,7 +256,7 @@ export const UsersTable: React.FC = (): JSX.Element => {
             </div>
           </div>
         </div>
-        <table {...getTableProps()} className={usersTableClass}>
+        <table {...getTableProps()} className="users-table">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr
@@ -315,7 +285,7 @@ export const UsersTable: React.FC = (): JSX.Element => {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()} className={tbodyClass}>
+          <tbody {...getTableBodyProps()}>
             {page.map((row, i) => {
               prepareRow(row);
               return (

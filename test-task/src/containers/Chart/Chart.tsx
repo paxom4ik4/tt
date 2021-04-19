@@ -1,25 +1,20 @@
 import * as React from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
+import { IUser } from "models/IUser";
 import "./Chart.scss";
 
 export const ChartContainer: React.FC = (): JSX.Element => {
   const users = useSelector((state: RootStateOrAny) => state.users.users);
 
-  const usersAges: Array<number> = users.map((user) => {
-    return user.age;
-  });
-
-  const profileViews: Array<number> = users.map((user) => {
-    return user.profileViews;
-  });
-
-  const connections: Array<number> = users.map((user) => {
-    return user.connections.length;
-  });
-
-  const userNames: Array<string> = users.map((user) => {
-    return user.firstName + " " + user.lastName;
+  const usersData = [];
+  users.forEach((user: IUser) => {
+    usersData.push({
+      userName: user.firstName + " " + user.lastName,
+      userAge: user.age,
+      profileViews: user.profileViews,
+      connections: user.connections.length,
+    });
   });
 
   interface IDataSet {
@@ -50,7 +45,7 @@ export const ChartContainer: React.FC = (): JSX.Element => {
   }
 
   const data: IDataChartObject = {
-    labels: userNames,
+    labels: usersData.map((user) => user.userName),
     datasets: [
       {
         label: "User's Age",
@@ -71,7 +66,7 @@ export const ChartContainer: React.FC = (): JSX.Element => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: usersAges,
+        data: usersData.map((user) => user.userAge),
       },
       {
         label: "Profile Views",
@@ -92,7 +87,7 @@ export const ChartContainer: React.FC = (): JSX.Element => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: profileViews,
+        data: usersData.map((user) => user.profileViews),
       },
       {
         label: "Connections",
@@ -113,7 +108,7 @@ export const ChartContainer: React.FC = (): JSX.Element => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: connections,
+        data: usersData.map((user) => user.connections),
       },
     ],
   };

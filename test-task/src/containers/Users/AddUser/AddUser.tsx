@@ -1,30 +1,21 @@
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IUser } from "../../../models/IUser";
 import * as React from "react";
+import { IUser } from "../../../models/IUser";
 import { useState, useEffect } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { addUser } from "store/Users/actions";
 import { Button } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import "./AddUser.scss";
+import { closeIcon } from "common/Icons/Icons";
 
 interface IAddUserProps {
   setIsOnAddUser: (state: boolean) => void;
 }
 
-const closeIcon: JSX.Element = <FontAwesomeIcon icon={faTimes} />;
-
 export const AddUser: React.FC<IAddUserProps> = ({
   setIsOnAddUser,
 }): JSX.Element => {
   const dispatch = useDispatch();
-
-  const appTheme = useSelector((state: RootStateOrAny) => state.app.appTheme);
-  const addUserContentClass =
-    appTheme === "dark"
-      ? "add-user-content add-user-content-dark"
-      : "add-user-content";
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -95,12 +86,12 @@ export const AddUser: React.FC<IAddUserProps> = ({
 
       dispatch(addUser(newUser));
       setIsOnAddUser(false);
-    } 
+    }
   };
 
   return (
     <div className="add-user-container">
-      <div className={addUserContentClass}>
+      <div className="add-user-content">
         <div className="add-user-header">
           <button
             onClick={() => {

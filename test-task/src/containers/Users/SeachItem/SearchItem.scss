@@ -1,3 +1,6 @@
+$search-item-color: rgb(175, 175, 175);
+$search-item-border-color: rgb(86, 86, 86);
+
 .search-user-container {
   position: relative;
 
@@ -9,11 +12,11 @@
   }
 }
 
-.search-user-container-dark {
+.dark-theme {
   .search-user-input {
     background: initial;
-    color: rgb(175, 175, 175);
-    border-color: rgb(86, 86, 86);
+    color: $search-item-color;
+    border-color: $search-item-border-color;
   }
 }
 

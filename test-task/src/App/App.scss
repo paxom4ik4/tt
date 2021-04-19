@@ -1,12 +1,8 @@
+$dark-theme-primary: #303030;
+$white-color: #ffffff;
+
 .routes-wrapper {
   position: relative;
-}
-
-.switch-wrapper > div {
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-  position: absolute;
 }
 
 .app-container {
@@ -18,7 +14,7 @@
 }
 
 .dark-theme {
-  background-color: #303030;
-  color: #ffffff;
+  background-color: $dark-theme-primary;
+  color: $white-color;
   transition: background-color 0.3s;
 }

@@ -18,7 +18,7 @@ $border-color: #3f51b5;
   z-index: 10;
 }
 
-.header-dark {
+.dark-theme .header {
   background-color: #000;
   transition: 0.5s;
   border-color: #303030;
@@ -65,7 +65,7 @@ $border-color: #3f51b5;
   background-color: $border-color;
 }
 
-.theme-mode {
+.header-change-theme-btn {
   cursor: pointer;
   background: inherit;
   color: #ffeb3b;
@@ -73,7 +73,7 @@ $border-color: #3f51b5;
   transition: 0.7s ease-in-out;
 }
 
-.theme-mode-dark {
+.dark-theme .header-change-theme-btn {
   transition: 0.5s;
   cursor: pointer;
   background: inherit;

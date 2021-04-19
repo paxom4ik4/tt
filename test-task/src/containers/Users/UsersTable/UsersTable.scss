@@ -1,11 +1,13 @@
 $primary: #3f51b5;
 $cell-background: hsl(230, 23%, 90%);
+$black-color: #000000;
+$border-color-dark: rgba(255, 255, 255, 0.2);
 
 table {
   font-size: 0.85em;
   border-spacing: 0;
   border-style: solid;
-  border-color: black;
+  border-color: $black-color;
   border-width: 1px 1px 0 1px;
   min-width: 1200px;
 
@@ -21,7 +23,7 @@ table {
   td {
     margin: 0;
     padding: 0.5rem;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $black-color;
 
     :last-child {
       border-right: 0;
@@ -35,7 +37,7 @@ table {
   }
   th {
     padding: 5px 10px;
-    border-right: 1px solid black;
+    border-right: 1px solid $black-color;
   }
 }
 
@@ -45,7 +47,7 @@ table {
   transition: 0.3s;
 }
 
-.users-table-dark .table-row:hover {
+.dark-theme .table-row:hover {
   cursor: pointer;
   background-color: rgb(30, 30, 30);
   transition: 0.3s;
@@ -77,21 +79,21 @@ table td {
   right: 5px;
 }
 
-.users-table-dark {
-  border-color: rgba(255, 255, 255, 0.2);
+.dark-theme {
+  border-color: $border-color-dark;
 }
 
-.users-table-dark {
+.dark-theme {
   tr {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: $border-color-dark;
   }
   td {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: $border-color-dark;
   }
 }
 
-.users-table-dark thead tr th {
-  border-color: rgba(255, 255, 255, 0.2);
+.dark-theme thead tr th {
+  border-color: $border-color-dark;
 }
 
 .users-table-container {
@@ -144,7 +146,7 @@ tbody tr:nth-child(even) {
   background-color: $cell-background;
 }
 
-.tbody-dark tr:nth-child(even) {
+.dark-theme tr:nth-child(even) {
   background-color: #000;
 }
 
@@ -157,11 +159,11 @@ tr:first-child {
   font-weight: bold;
 }
 
-.users-table-dark .MuiButton-label {
+.dark-theme .MuiButton-label {
   color: #fff;
 }
 
-.pagination-dark {
+.dark-theme .pagination {
   button {
     background: inherit;
     color: #fff;
