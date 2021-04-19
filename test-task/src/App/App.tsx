@@ -55,14 +55,16 @@ export const App: React.FC<IAppProps> = ({ isDarkMode }): JSX.Element => {
         <Header setCookie={setCookie} />
         <ReactNotification />
         <Switch>
-          <SwipeableRoutes>
-            <Route path="/" exact>
-              <Users users={users} />
-            </Route>
-            <Route path="/chart" exact>
-              <ChartContainer />
-            </Route>
-          </SwipeableRoutes>
+          <>
+            <SwipeableRoutes>
+              <Route path="/" exact>
+                <Users users={users} />
+              </Route>
+              <Route path="/chart" exact>
+                <ChartContainer />
+              </Route>
+            </SwipeableRoutes>
+          </>
         </Switch>
       </div>
     </Router>
