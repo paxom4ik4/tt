@@ -1,0 +1,84 @@
+2d78f0f8a4990b146f606ec891754eae
+$primary: #002984;
+$white: #ffffff;
+$border-color: #3f51b5;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  height: 48px;
+  border-bottom: 1px solid $border-color;
+  width: 100%;
+  background-color: $primary;
+  color: $white;
+  margin-bottom: 10px;
+  transition: 0.5s;
+  z-index: 10;
+}
+
+.dark-theme .header {
+  background-color: #000;
+  transition: 0.5s;
+  border-color: #303030;
+}
+
+.header-content {
+  width: 1200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  width: 15%;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.header-nav {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nav-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 100%;
+  text-decoration: none;
+  color: $white;
+  &:hover {
+    cursor: pointer;
+    background-color: $border-color;
+    transition: 0.2s;
+  }
+}
+
+.active-link {
+  background-color: $border-color;
+}
+
+.header-change-theme-btn {
+  cursor: pointer;
+  background: inherit;
+  color: #ffeb3b;
+  font-size: 1.15em;
+  transition: 0.7s ease-in-out;
+}
+
+.dark-theme .header-change-theme-btn {
+  transition: 0.5s;
+  cursor: pointer;
+  background: inherit;
+  color: $border-color;
+  font-size: 1.15em;
+  transform: rotate(360deg);
+}

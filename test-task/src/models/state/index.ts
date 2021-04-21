@@ -1,5 +1,3 @@
-export interface State {
-  users;
-  app;
-  // add more fields according rootReducer
-}
+import rootReducer from "store/combineReducers";
+
+export type State = ReturnType<typeof rootReducer>;

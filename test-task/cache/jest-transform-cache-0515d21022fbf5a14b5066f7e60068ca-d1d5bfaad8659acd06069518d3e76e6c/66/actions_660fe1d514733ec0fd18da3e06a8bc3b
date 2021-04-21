@@ -1,0 +1,19 @@
+1aab5bce6a979818425fa539c7197df2
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.switchTheme = void 0;
+
+var _constants = require("./constants");
+
+var switchTheme = function switchTheme(theme) {
+  return {
+    type: _constants.ActionTypes.SWITCH_THEME,
+    payload: theme
+  };
+};
+
+exports.switchTheme = switchTheme;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFjdGlvbnMudHMiXSwibmFtZXMiOlsic3dpdGNoVGhlbWUiLCJ0aGVtZSIsInR5cGUiLCJBY3Rpb25UeXBlcyIsIlNXSVRDSF9USEVNRSIsInBheWxvYWQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQTs7QUFFTyxJQUFNQSxXQUFXLEdBQUcsU0FBZEEsV0FBYyxDQUFDQyxLQUFEO0FBQUEsU0FBb0I7QUFDN0NDLElBQUFBLElBQUksRUFBRUMsdUJBQVlDLFlBRDJCO0FBRTdDQyxJQUFBQSxPQUFPLEVBQUVKO0FBRm9DLEdBQXBCO0FBQUEsQ0FBcEIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBBY3Rpb25UeXBlcyB9IGZyb20gXCIuL2NvbnN0YW50c1wiO1xyXG5cclxuZXhwb3J0IGNvbnN0IHN3aXRjaFRoZW1lID0gKHRoZW1lOiBzdHJpbmcpID0+ICh7XHJcbiAgdHlwZTogQWN0aW9uVHlwZXMuU1dJVENIX1RIRU1FLFxyXG4gIHBheWxvYWQ6IHRoZW1lLFxyXG59KTtcclxuIl19

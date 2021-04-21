@@ -22,7 +22,7 @@ export const AddUser: React.FC<IAddUserProps> = ({
   interface IFormData {
     firstName: string;
     lastName: string;
-    age: number;
+    age: string;
     country: string;
     city: string;
     address: string;
@@ -34,7 +34,7 @@ export const AddUser: React.FC<IAddUserProps> = ({
   const [formData, setFormData] = useState<IFormData>({
     firstName: "",
     lastName: "",
-    age: null,
+    age: "",
     country: "",
     city: "",
     address: "",
@@ -93,6 +93,7 @@ export const AddUser: React.FC<IAddUserProps> = ({
         ...formData,
         id: uuidv4(),
         avatar: "",
+        age: Number(formData.age),
         profileViews: 0,
         lastLoggedIn: "",
         connections,
@@ -155,7 +156,7 @@ export const AddUser: React.FC<IAddUserProps> = ({
                   onChange={(event) =>
                     setFormData({
                       ...formData,
-                      age: Number(event.currentTarget.value),
+                      age: event.currentTarget.value,
                     })
                   }
                 />

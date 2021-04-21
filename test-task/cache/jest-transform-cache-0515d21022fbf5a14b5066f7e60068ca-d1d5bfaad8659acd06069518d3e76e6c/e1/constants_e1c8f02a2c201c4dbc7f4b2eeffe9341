@@ -1,0 +1,14 @@
+bcccd65a9c48f9af3b1ebc7b04c7edb0
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ActionTypes = void 0;
+var ActionTypes;
+exports.ActionTypes = ActionTypes;
+
+(function (ActionTypes) {
+  ActionTypes["SWITCH_THEME"] = "SWITCH_THEME";
+})(ActionTypes || (exports.ActionTypes = ActionTypes = {}));
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbnN0YW50cy50cyJdLCJuYW1lcyI6WyJBY3Rpb25UeXBlcyJdLCJtYXBwaW5ncyI6Ijs7Ozs7O0lBQVlBLFc7OztXQUFBQSxXO0FBQUFBLEVBQUFBLFc7R0FBQUEsVywyQkFBQUEsVyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBlbnVtIEFjdGlvblR5cGVzIHtcclxuICBTV0lUQ0hfVEhFTUUgPSBcIlNXSVRDSF9USEVNRVwiLFxyXG59XHJcbiJdfQ==

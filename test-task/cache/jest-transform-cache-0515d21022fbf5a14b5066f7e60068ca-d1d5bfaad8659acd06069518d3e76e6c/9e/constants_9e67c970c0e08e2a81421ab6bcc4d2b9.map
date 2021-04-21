@@ -1,0 +1,1 @@
+{"version":3,"sources":["constants.ts"],"names":["ActionTypes"],"mappings":";;;;;;IAAYA,W;;;WAAAA,W;AAAAA,EAAAA,W;GAAAA,W,2BAAAA,W","sourcesContent":["export enum ActionTypes {\r\n  SWITCH_THEME = \"SWITCH_THEME\",\r\n}\r\n"]}
